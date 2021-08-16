@@ -14,6 +14,8 @@ public class Fase1 {
 	
 	private Keyboard teclado;
 	
+	private Slime slime;
+	
 	public Fase1(Window window) {
 		janela = window;
 		
@@ -23,6 +25,9 @@ public class Fase1 {
 		jogador = new Jogador(540,350);
 		teclado = janela.getKeyboard();
 		
+		slime = new Slime(300,300);
+		
+		
 		Som.play("musicmine.wav");
 		run();
 	}
@@ -31,13 +36,24 @@ public class Fase1 {
 			 jogador.mover(janela, teclado);
 			jogador.caminho(cena);
 			 
+			slime.caminho(cena);
+			slime.perseguir(jogador.x, jogador.y);
+			
 			 cena.moveScene(jogador);  //centralizar o jogador no cenario //tipo camera
 			 
 			 jogador.x += cena.getXOffset();        //p/ movimentação ser mais suave
 			 jogador.y += cena.getYOffset();			//meio que movimentar junto com o cenario
+			
+			 slime.x += cena.getXOffset();        
+			 slime.y += cena.getYOffset();
 			 
-			 jogador.draw();			 
+			 jogador.atirar(janela, cena, teclado);
+			 
+			 
+			 jogador.draw();	
+			 slime.draw();
 			 janela.update();
+			 janela.delay(20);
 			
 		}
 	}
